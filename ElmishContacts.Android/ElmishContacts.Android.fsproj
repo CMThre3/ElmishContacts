@@ -21,7 +21,7 @@
     </NuGetPackageImportStamp>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <RestorePackages>true</RestorePackages>
-    <SelectedDevice>my_device</SelectedDevice>
+    <SelectedDevice>Razer Phone</SelectedDevice>
     <DefaultDevice>my_device</DefaultDevice>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

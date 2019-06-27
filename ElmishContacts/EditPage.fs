@@ -23,6 +23,7 @@ module EditPage =
         | UpdateIsFavorite of bool
         | UpdatePicture
         | SetPicture of byte array option
+        | UpdateGames of string
 
         // Actions
         | SaveContact
@@ -49,7 +50,8 @@ module EditPage =
           IsFavorite: bool
           Picture: byte array option
           IsFirstNameValid: bool
-          IsLastNameValid: bool }
+          IsLastNameValid: bool 
+          Games: string}
 
     /// Functions
     let saveAsync dbPath contact = async {
@@ -141,7 +143,8 @@ module EditPage =
                   IsFavorite = c.IsFavorite
                   Picture = if c.Picture <> null then Some c.Picture else None
                   IsFirstNameValid = true
-                  IsLastNameValid = true }
+                  IsLastNameValid = true 
+                  Games = c.Games}
             | None ->
                 { Contact = None
                   FirstName = ""
@@ -152,7 +155,8 @@ module EditPage =
                   IsFavorite = false
                   Picture = None
                   IsFirstNameValid = false
-                  IsLastNameValid = false }
+                  IsLastNameValid = false 
+                  Games = ""}
 
         model, Cmd.none
 
@@ -172,6 +176,8 @@ module EditPage =
             { model with IsFavorite = isFavorite }, Cmd.none, ExternalMsg.NoOp
         | UpdatePicture ->
             model, Cmd.ofAsyncMsgOption (updatePictureAsync model.Picture), ExternalMsg.NoOp
+        | UpdateGames games ->
+            { model with Games = games }, Cmd.none, ExternalMsg.NoOp
         | SetPicture picture ->
             { model with Picture = picture}, Cmd.none, ExternalMsg.NoOp
         | SaveContact ->
@@ -191,6 +197,7 @@ module EditPage =
                         Address = model.Address
                         IsFavorite = model.IsFavorite
                         Picture = bytes
+                        Games = model.Games
                     }
                 model, Cmd.ofAsyncMsg (saveAsync dbPath newContact), ExternalMsg.NoOp
 
@@ -268,6 +275,9 @@ module EditPage =
 
                             mkFormLabel "Address"
                             mkFormEditor mModel.Address (UpdateAddress >> dispatch)
+
+                            mkFormLabel "Games"
+                            mkFormEntry "Games" mModel.Games Keyboard.Text true (UpdateGames >> dispatch)
 
                             mkDestroyButton "Delete" (fun () -> mModel.Contact.Value |> DeleteContact |> dispatch) isDeleteButtonVisible
                         ]

@@ -14,6 +14,7 @@ module Repository =
         member val Address = "" with get, set
         member val IsFavorite = false with get, set
         member val Picture: byte array = null with get, set
+        member val Games = "" with get, set
 
     let convertToObject (item: Contact) =
         let obj = ContactObject()
@@ -25,6 +26,7 @@ module Repository =
         obj.Address <- item.Address
         obj.IsFavorite <- item.IsFavorite
         obj.Picture <- item.Picture
+        obj.Games <- item.Games
         obj
 
     let convertToModel (obj: ContactObject) : Contact =
@@ -37,6 +39,7 @@ module Repository =
             Address = obj.Address
             IsFavorite = obj.IsFavorite
             Picture = obj.Picture
+            Games = obj.Games
         }
 
     let connect dbPath = async {

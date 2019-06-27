@@ -124,6 +124,8 @@ module DetailPage =
                                 mkOptionalLabel model.Contact.Phone
                                 mkDetailFieldTitle "Address"
                                 mkOptionalLabel model.Contact.Address
+                                mkDetailFieldTitle "Games"
+                                mkOptionalLabel model.Contact.Games
                             ]
                         )
                     ]
